@@ -71,7 +71,7 @@ export function UserIdentification(){
               />
 
               <View style={styles.footer}>
-                <Button text="Confirmar" />
+                <Button text="Confirmar" activeOpacity={0.8} />
               </View>
             </View>
           </View>
