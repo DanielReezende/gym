@@ -50,7 +50,7 @@ $ cp .env.example .env
 # Finally, run the api service in a development environment :)
 $ yarn start
 
-# Well done, PlantManager is started!
+# Well done, GYM is started!
 ```
 <br>
 
