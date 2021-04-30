@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/core';
 import { 
   SafeAreaView, 
   View, 
@@ -14,6 +15,12 @@ import styles from './styles';
 
 
 export function Welcome() {
+  const navigation = useNavigation();
+
+  function handleNavigate() {
+    navigation.navigate('UserIdentification');
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -31,7 +38,7 @@ export function Welcome() {
           sempre que precisar.
         </Text>
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.7}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.7} onPress={handleNavigate}>
           <Feather name="chevron-right" style={styles.iconButton}/>
         </TouchableOpacity>
       </View>

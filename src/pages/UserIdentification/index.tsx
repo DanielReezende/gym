@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   View,
   Image, 
-  StyleSheet, 
   SafeAreaView, 
   Text, 
   TextInput, 
@@ -11,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 import { Button } from '../../components/Button';
 
@@ -20,10 +20,17 @@ import colors from '../../styles/colors';
 import logoImg from '../../assets/logo.png';
 
 
+
 export function UserIdentification(){
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
   const [name, setName] = useState<string>()
+
+  const navigation = useNavigation();
+
+  function handleNavigate() {
+    navigation.navigate('Main');
+  }
 
   function handleInputBlur () {
     setIsFocused(false)
@@ -71,7 +78,7 @@ export function UserIdentification(){
               />
 
               <View style={styles.footer}>
-                <Button text="Confirmar" activeOpacity={0.8} />
+                <Button text="Confirmar" activeOpacity={0.8} onPress={handleNavigate}/>
               </View>
             </View>
           </View>

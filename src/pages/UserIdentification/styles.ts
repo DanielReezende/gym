@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background
   },
   form: {
-    marginTop: 40,
+    marginTop: 50,
     width: '85%',
     justifyContent: 'center',
     alignItems:'center',
