@@ -18,7 +18,7 @@ export function Welcome() {
   const navigation = useNavigation();
 
   function handleNavigate() {
-    navigation.navigate('UserIdentification');
+    navigation.navigate('Main');
   }
 
   return (

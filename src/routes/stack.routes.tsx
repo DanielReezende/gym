@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { Welcome } from '../pages/Welcome';
-import { UserIdentification } from '../pages/UserIdentification';
 import { Main } from '../pages/Main';
 
 import colors from '../styles/colors';
@@ -19,7 +18,6 @@ const AppRoutes: React.FC = () => (
     }
   }}>
     <stackRoutes.Screen name="Welcome" component={Welcome}  />
-    <stackRoutes.Screen name="UserIdentification" component={UserIdentification}  />
     <stackRoutes.Screen name="Main" component={AuthRoutes}  />
   </stackRoutes.Navigator>
 )
