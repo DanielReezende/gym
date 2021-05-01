@@ -10,11 +10,12 @@ import {
 
 import logoImg from '../../assets/logoImg.png';
 
-import listExercicios from '../../assets/listaexercicios.png';
+import listaExercicios from '../../assets/listaexercicios.png';
 import listaSeries from '../../assets/listaseries.png';
 import listaAlunos from '../../assets/listaalunos.png';
 
 import styles from './styles';
+import { ListButton } from '../../components/ListButton';
 
 export function Main(){
 
@@ -30,32 +31,24 @@ export function Main(){
           <Text style={styles.title}>Opções</Text>
           
           <View style={styles.listContainer}>
-            <TouchableOpacity style={styles.buttonList} activeOpacity={0.8}>
-              <Image source={listExercicios} style={styles.listImage}/>
-              <View style={styles.listInfo}>
-                <Text style={styles.listTitle}>Lista de Exercicios</Text>
-                <Text style={styles.listDetatil}>45 exercicios cadastrados</Text>
-              </View>
-            </TouchableOpacity>
+            <ListButton 
+              image={listaExercicios} 
+              title="Lista de Exercicios" 
+              detail="40 exercicios cadastrados"
+            />
 
-            <TouchableOpacity style={styles.buttonList} activeOpacity={0.8}>
-              <Image source={listaSeries} style={styles.listImage}/>
-              <View style={styles.listInfo}>
-                <Text style={styles.listTitle}>Lista de Séries</Text>
-                <Text style={styles.listDetatil}>45 séries cadastradas</Text>
-              </View>
-            </TouchableOpacity>
+            <ListButton 
+              image={listaSeries} 
+              title="Lista de Séries" 
+              detail="45 séries cadastradas"
+            />
 
-            <TouchableOpacity style={styles.buttonList} activeOpacity={0.8}>
-              <Image source={listaAlunos} style={styles.listImage}/>
-              <View style={styles.listInfo}>
-                <Text style={styles.listTitle}>Lista de Alunos</Text>
-                <Text style={styles.listDetatil}>45 alunos cadastradas</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-
-          
+            <ListButton 
+              image={listaAlunos} 
+              title="Lista de Alunos" 
+              detail="45 alunos cadastradas"
+            />
+          </View>        
         </View>
      </View>
    </SafeAreaView>

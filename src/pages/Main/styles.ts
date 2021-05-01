@@ -48,33 +48,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 10
   },
-  buttonList: {
-    flexDirection: 'row',
-    width: '100%',
-    height: 120,
-    borderRadius: 16,
-    backgroundColor: colors.white,
-    alignItems: 'center',
-    marginBottom: 10
-  },
-  listImage: {
-    width: 58,
-    height: 58,
-    marginLeft: 20
-  },
-  listInfo: {
-    marginLeft: 20,
-  },
-  listTitle: {
-    fontFamily: fonts.bold,
-    fontSize: 18,
-    color: colors.heading
-  },
-  listDetatil: {
-    fontSize: 14,
-    fontFamily: fonts.text,
-    color: '#979797'
-  }
+ 
 
 })
 
