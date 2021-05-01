@@ -5,8 +5,6 @@ import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons';
 
 import colors from '../styles/colors';
 
-import { ListStudents } from '../pages/ListStudents';
-import { ListRepeats } from '../pages/ListRepeats';
 import { Main } from '../pages/Main';
 
 const AppTab = createBottomTabNavigator();
@@ -31,7 +29,7 @@ const AuthRoutes = () => {
             <FontAwesome5 name="home" size={size} color={color} />
           ))
         }}/>
-        <AppTab.Screen  name="Adicionar Alunos" component={ListStudents} options={{
+        {/* <AppTab.Screen  name="Adicionar Alunos" component={ListStudents} options={{
           tabBarIcon: (({ size, color }) => (
             <FontAwesome5 name="user" size={size} color={color} />
           ))
@@ -40,7 +38,7 @@ const AuthRoutes = () => {
           tabBarIcon: (({ size, color }) => (
             <MaterialIcons name="repeat-one" size={size} color={color} />
           ))
-        }}/>
+        }}/> */}
 
         {/* <AppTab.Screen  name="Séries" component={ListRepeats} options={{
           tabBarIcon: (({ size, color }) => (
