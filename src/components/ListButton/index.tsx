@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Image, ImageSourcePropType, View, Text, StyleSheet, TouchableOpacityProps} from 'react-native';
+import { useNavigation } from '@react-navigation/core';
 
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
@@ -9,12 +10,20 @@ interface ListButtonProps  extends TouchableOpacityProps {
   image: ImageSourcePropType;
   title: string;
   detail: string;
+  screen: string;
 }
 
 
-export function ListButton({ image, title, detail, ...rest }: ListButtonProps){
+export function ListButton({ image, screen, title, detail, ...rest }: ListButtonProps){
+  const navigation = useNavigation();
+
+
+  function handleNavigate (screen: string) {
+    navigation.navigate(screen);
+  }
+  
   return (
-    <TouchableOpacity style={styles.buttonList} activeOpacity={0.8} {...rest}>
+    <TouchableOpacity style={styles.buttonList} activeOpacity={0.8} {...rest} onPress={() => handleNavigate(screen)}>
       <Image source={image} style={styles.listImage}/>
       <View style={styles.listInfo}>
         <Text style={styles.listTitle}>{title}</Text>

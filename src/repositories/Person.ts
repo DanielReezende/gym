@@ -1,14 +1,14 @@
 import * as SQLite from 'expo-sqlite';
 
 interface Person {
-  id: number;
+  id?: number;
   name: string;
 }
 
 interface PersonRepositoryProps {
   onSuccess: SQLite.SQLStatementCallback | undefined;
-  onError: SQLite.SQLStatementErrorCallback | undefined;
-  person: Person;
+  onError?: SQLite.SQLStatementErrorCallback | undefined;
+  person?: Person;
 }
 
 export default class PersonRepository {
@@ -41,7 +41,7 @@ export default class PersonRepository {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.INSERT,
-        [person.name],
+        [person?.name],
         onSuccess,
         onError,
       );
@@ -52,7 +52,7 @@ export default class PersonRepository {
     var db = SQLite.openDatabase(this.DBNAME);
 
     db.transaction((transaction) => {
-      transaction.executeSql(this.DELETE, [person.id], onSuccess, onError);
+      transaction.executeSql(this.DELETE, [person?.id], onSuccess, onError);
     });
   }
 }

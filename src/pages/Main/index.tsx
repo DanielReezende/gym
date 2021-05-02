@@ -20,6 +20,7 @@ import { ListButton } from '../../components/ListButton';
 export function Main(){
 
 
+
   return (
    <SafeAreaView style={styles.container}>
      <StatusBar  hidden={true}/>
@@ -35,18 +36,21 @@ export function Main(){
               image={listaExercicios} 
               title="Lista de Exercicios" 
               detail="40 exercicios cadastrados"
+              screen="ListExercises"
             />
 
             <ListButton 
               image={listaSeries} 
               title="Lista de Séries" 
               detail="45 séries cadastradas"
+              screen="ListRepeats"
             />
 
             <ListButton 
               image={listaAlunos} 
               title="Lista de Alunos" 
               detail="45 alunos cadastradas"
+              screen="ListStudents"
             />
           </View>        
         </View>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { 
-  SafeAreaView, 
+  SafeAreaView,
+  StatusBar, 
   View, 
   Text, 
   Image,
@@ -23,6 +24,7 @@ export function Welcome() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar  hidden={true}/>
       <View style={styles.content}>
         <Text style={styles.title}>
           Gerencie{'\n'}

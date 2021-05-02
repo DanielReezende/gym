@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Welcome } from '../pages/Welcome';
 import { ListRepeats } from '../pages/ListRepeats';
 import { ListStudents } from '../pages/ListStudents';
+import { ListExercises } from '../pages/ListExercises';
 
 import colors from '../styles/colors';
 
@@ -22,6 +23,7 @@ const AppRoutes: React.FC = () => (
     <stackRoutes.Screen name="Main" component={AuthRoutes}  />
     <stackRoutes.Screen name="ListRepeats" component={ListRepeats}  />
     <stackRoutes.Screen name="ListStudents" component={ListStudents}  />
+    <stackRoutes.Screen name="ListExercises" component={ListExercises}  />
   </stackRoutes.Navigator>
 )
 
