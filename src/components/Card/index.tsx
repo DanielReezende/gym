@@ -2,8 +2,11 @@ import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/core';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
+
+import PersonRepository from '../../repositories/Person';
 
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
@@ -13,10 +16,26 @@ interface PlantProps extends RectButtonProps {
     id: number;
     name: string;
   };
-  handleRemove?: () => void;
 }
 
-export const Card = ({ data, handleRemove, ...rest}: PlantProps) => {  
+
+export const Card = ({ data, ...rest}: PlantProps) => {  
+  const navigation = useNavigation()
+
+  const repository = new PersonRepository();
+
+  function handleRemove (id: number, name: string) {
+    repository.Delete({person: {
+      id,
+      name
+    }, onSuccess: () => {
+      alert(`Aluno ${data.id} removido com sucesso!`)
+      navigation.navigate('Main');
+      navigation.navigate('ListStudents');
+    }})
+  }
+
+
   return (
     <Swipeable
       overshootRight={false}
@@ -25,7 +44,7 @@ export const Card = ({ data, handleRemove, ...rest}: PlantProps) => {
           <View>
             <RectButton 
               style={styles.buttonRemove}
-              onPress={handleRemove}
+              onPress={() => handleRemove(data.id, data.name)}
             >
               <Feather name="trash" size={32} color={colors.white} /> 
             </RectButton>
