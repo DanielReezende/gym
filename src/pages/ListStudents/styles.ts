@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 30,
     paddingVertical: 20,
-    backgroundColor:  '#EFEDF5',
+    backgroundColor:  colors.background,
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
   },

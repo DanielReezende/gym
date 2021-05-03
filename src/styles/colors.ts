@@ -3,6 +3,8 @@ export default {
 
 
   heading: '#50555C',
+  body_dark: '#738078',
+  body_light: '#AAB2AD',
 
 
   background: '#F0F0F5',
