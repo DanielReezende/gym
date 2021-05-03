@@ -53,7 +53,7 @@ export function ListStudents(){
         </View>
         <View style={styles.main}>
           <Text style={styles.title}>Opções</Text>
-
+          <Text style={styles.title}>{students[0].name}</Text>
           
           <View style={styles.listContainer}>
           </View>        
