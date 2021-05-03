@@ -13,7 +13,7 @@ import * as SQLite from 'expo-sqlite';
 
 import logoImg from '../../assets/logoImg.png';
 import styles from './styles';
-import { Card } from '../../components/Card';
+import { CardStudent } from '../../components/CardStudent';
 
 
 interface Student {
@@ -42,11 +42,8 @@ export function ListStudents(){
 
   useEffect(() => {
     retrieveData()
-
-    console.log('Students: ', students)
   }, [])
 
-  console.log('Students, fora do useEffect', students)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,7 +58,7 @@ export function ListStudents(){
             <FlatList 
               data={students} 
               renderItem={({ item }) => (
-                <Card data={item} />
+                <CardStudent data={item} />
               )}
               keyExtractor={(item) => String(item.id)}
               showsVerticalScrollIndicator={false}

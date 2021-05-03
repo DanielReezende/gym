@@ -11,7 +11,7 @@ import PersonRepository from '../../repositories/Person';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
 
-interface PlantProps extends RectButtonProps {
+interface CardStudentProps extends RectButtonProps {
   data: {
     id: number;
     name: string;
@@ -19,7 +19,7 @@ interface PlantProps extends RectButtonProps {
 }
 
 
-export const Card = ({ data, ...rest}: PlantProps) => {  
+export const CardStudent = ({ data, ...rest}: CardStudentProps) => {  
   const navigation = useNavigation()
 
   const repository = new PersonRepository();
@@ -46,7 +46,7 @@ export const Card = ({ data, ...rest}: PlantProps) => {
               style={styles.buttonRemove}
               onPress={() => handleRemove(data.id, data.name)}
             >
-              <Feather name="trash" size={32} color={colors.white} /> 
+              <Feather name="trash" size={28} color={colors.white} /> 
             </RectButton>
           </View>
         </Animated.View>
