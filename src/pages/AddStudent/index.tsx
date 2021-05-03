@@ -37,10 +37,6 @@ export function AddStudent(){
     navigation.navigate('ListStudents');
   }
 
-  function error () {
-
-  }
-
 
   function handleSubmit() {
     repository.Save({
