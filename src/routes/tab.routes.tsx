@@ -1,12 +1,13 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome5, MaterialIcons, Ionicons } from '@expo/vector-icons'; 
+import { FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
 
 
 import colors from '../styles/colors';
 
 import { Main } from '../pages/Main';
 import { AddStudent } from '../pages/AddStudent';
+import { AddSeries } from '../pages/AddSeries';
 
 const AppTab = createBottomTabNavigator();
 
@@ -35,11 +36,11 @@ const AuthRoutes = () => {
             <FontAwesome5 name="user" size={size} color={color} />
           ))
         }}/>
-        {/* <AppTab.Screen  name="Adicionar Repetições" component={ListRepeats} options={{
+        <AppTab.Screen  name="Adicionar Repetições" component={AddSeries} options={{
           tabBarIcon: (({ size, color }) => (
             <MaterialIcons name="repeat-one" size={size} color={color} />
           ))
-        }}/> */}
+        }}/>
 
         {/* <AppTab.Screen  name="Séries" component={ListRepeats} options={{
           tabBarIcon: (({ size, color }) => (

@@ -53,7 +53,7 @@ export function ListStudents(){
             <Image source={logoImg} style={styles.logoImage} resizeMode="contain"/>
           </View>
           <View style={styles.main}>
-            <Text style={styles.title}>Opções</Text>
+            <Text style={styles.title}>Lista de Alunos</Text>
 
             <FlatList 
               data={students} 
