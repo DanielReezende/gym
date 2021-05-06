@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { FontAwesome5, MaterialIcons } from '@expo/vector-icons'; 
+import { FontAwesome5, MaterialIcons, Ionicons  } from '@expo/vector-icons'; 
 
 
 import colors from '../styles/colors';
@@ -8,6 +8,7 @@ import colors from '../styles/colors';
 import { Main } from '../pages/Main';
 import { AddStudent } from '../pages/AddStudent';
 import { AddSeries } from '../pages/AddSeries';
+import { AddExercise } from '../pages/AddExercise';
 
 const AppTab = createBottomTabNavigator();
 
@@ -42,16 +43,12 @@ const AuthRoutes = () => {
           ))
         }}/>
 
-        {/* <AppTab.Screen  name="Séries" component={ListRepeats} options={{
+        <AppTab.Screen  name="Séries" component={AddExercise} options={{
           tabBarIcon: (({ size, color }) => (
             <Ionicons name="md-fitness-sharp" size={size} color={color} />
           ))
-        }}/>
-        <AppTab.Screen  name="Perfil" component={ListRepeats} options={{
-          tabBarIcon: (({ size, color }) => (
-            <FontAwesome5 name="user-cog" size={size} color={color} />
-          ))
-        }}/> */}
+        }}/> 
+
     </AppTab.Navigator>
   )
 }

@@ -4,7 +4,6 @@ import {
   Text,
   Image,
   SafeAreaView,
-  TouchableOpacity,
   StatusBar
 } from 'react-native';
 
@@ -43,7 +42,7 @@ export function Main(){
               image={listaSeries} 
               title="Lista de Séries" 
               detail="45 séries cadastradas"
-              screen="ListRepeats"
+              screen="ListSeries"
             />
 
             <ListButton 

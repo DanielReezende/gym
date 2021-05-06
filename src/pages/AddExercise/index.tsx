@@ -14,7 +14,7 @@ import {
 
 import { useNavigation } from '@react-navigation/core';
 
-import SeriesRepository from '../../repositories/Series';
+import ExercisesRepository from '../../repositories/Exercises';
 import logoImg from '../../assets/logoImg.png';
 
 import { Button } from '../../components/Button';
@@ -23,38 +23,51 @@ import colors from '../../styles/colors';
 import styles from './styles';
 
 
-export function AddSeries(){
+export function AddExercise(){
   const navigation = useNavigation()
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
-  const [name, setName] = useState<string>('')
-  const [idStudent, setIdStudent] = useState<number>(0)
+  const [dsExercicio, setDsExercicio] = useState<string>('')
+  const [idSerie, setIdSerie] = useState<number>(0)
+  const [repeticoes, setRepeticoes] = useState<number>(0)
+  const [qtdRepeticoes, setQtdRepeticoes] = useState<number>(0)
 
-  const repository = new SeriesRepository();
+
+  const repository = new ExercisesRepository();
 
   function success () {
-    alert('Série registrada com sucesso');
+    alert('Exercicio registrado com sucesso');
 
-    navigation.navigate('ListSeries');
+    navigation.navigate('ListExercises');
   }
 
 
   function handleSubmit() {
+    const exercise = {
+      dsExercicio,
+      idSerie,
+      qtdRepeticoes,
+      repeticoes
+    }
+
+    console.log(exercise)
+
+
     repository.Save({
-      series: {
-        desc: name,
-        idPerson: idStudent
+      exercises: {
+        dsExercicio,
+        idSerie,
+        qtdRepeticoes,
+        repeticoes
       },
       onSuccess: success
     })
-
-  
   }
 
 
   function handleInputBlur () {
     setIsFocused(false)
-    setIsFilled(!!name || !!idStudent)
+    setIsFilled(!!dsExercicio || !!idSerie || !!qtdRepeticoes || !!repeticoes)
   }
 
   function handleInputFocus() {
@@ -63,12 +76,22 @@ export function AddSeries(){
 
   function handleInputChange(value: string) {
     setIsFilled(!!value)
-    setName(value)
+    setDsExercicio(value)
   }
 
-  function handleInputIdChange(value: string) {
+  function handleInputIdSerieChange(value: string) {
     setIsFilled(!!value)
-    setIdStudent(Number(value))
+    setIdSerie(Number(value))
+  }
+
+  function handleInputRepeatChange(value: string) {
+    setIsFilled(!!value)
+    setRepeticoes(Number(value))
+  }
+
+  function handleInputAmountRepetitionsChange(value: string) {
+    setIsFilled(!!value)
+    setQtdRepeticoes(Number(value))
   }
 
   return (
@@ -84,13 +107,13 @@ export function AddSeries(){
                 <Image source={logoImg} style={styles.logoImage} resizeMode="contain"/>
               </View>
               <View style={styles.main}>
-                <Text style={styles.title}>Adicionar Séries</Text>
+                <Text style={styles.title}>Adicionar Exercicio</Text>
                 
                 <View style={styles.form}>
 
                   <TextInput  
                     style={[styles.input, (isFocused || isFilled) && { borderColor: colors.red }]}
-                    placeholder="Digite um nome"
+                    placeholder="Digite uma descrição"
                     onBlur={handleInputBlur}
                     onFocus={handleInputFocus}
                     onChangeText={handleInputChange}
@@ -98,10 +121,26 @@ export function AddSeries(){
 
                   <TextInput  
                     style={[styles.input, (isFocused || isFilled) && { borderColor: colors.red }]}
-                    placeholder="Digite um ID"
+                    placeholder="Digite o id da série "
                     onBlur={handleInputBlur}
                     onFocus={handleInputFocus}
-                    onChangeText={handleInputIdChange}
+                    onChangeText={handleInputIdSerieChange}
+                  />
+
+                  <TextInput  
+                    style={[styles.input, (isFocused || isFilled) && { borderColor: colors.red }]}
+                    placeholder="Digite a numero de repetições "
+                    onBlur={handleInputBlur}
+                    onFocus={handleInputFocus}
+                    onChangeText={handleInputRepeatChange}
+                  />
+
+                  <TextInput  
+                    style={[styles.input, (isFocused || isFilled) && { borderColor: colors.red }]}
+                    placeholder="Digite a quantidade de repetições "
+                    onBlur={handleInputBlur}
+                    onFocus={handleInputFocus}
+                    onChangeText={handleInputAmountRepetitionsChange}
                   />
 
                   <View style={styles.footer}>
