@@ -9,14 +9,14 @@ interface Series {
 interface SeriesRepositoryProps {
   onSuccess: SQLite.SQLStatementCallback | undefined;
   onError?: SQLite.SQLStatementErrorCallback | undefined;
-  series: Series;
+  series?: Series;
 }
 
 export default class SeriesRepository {
   DBNAME = "app.db";
 
   CREATE = 
-    "CREATE TABLE IF NOT EXISTS series(idSerie INTEGER PRIMARY KEY AUTOINCREMENT, dsSerie VARCHAR(50), FOREIGN KEY (idPerson) REFERENCES Person (id))";
+    "CREATE TABLE IF NOT EXISTS series (idSerie INTEGER PRIMARY KEY AUTOINCREMENT, dsSerie VARCHAR(50), idPerson INTEGER, FOREIGN KEY (idPerson) REFERENCES Person (id))";
 
   SELECT = "SELECT * FROM series";
 
@@ -40,7 +40,7 @@ export default class SeriesRepository {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.INSERT,
-        [series.desc, series.idPerson],
+        [series?.desc, series?.idPerson],
         onSuccess,
         onError
       );
