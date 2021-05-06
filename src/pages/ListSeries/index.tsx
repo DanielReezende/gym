@@ -46,7 +46,6 @@ export function ListSeries(){
     retrieveData()
   }, [])
 
-  console.log(series)
 
 
   return (

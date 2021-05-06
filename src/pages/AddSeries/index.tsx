@@ -47,8 +47,6 @@ export function AddSeries(){
       },
       onSuccess: success
     })
-
-  
   }
 
 

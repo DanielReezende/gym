@@ -1,7 +1,7 @@
 import * as SQLite from "expo-sqlite";
 
 interface Exercises {
-  id?: number;
+  idExercicio?: number;
   dsExercicio: string;
   idSerie: number;
   repeticoes: number;
@@ -11,14 +11,14 @@ interface Exercises {
 interface ExercisesRepositoryProps {
   onSuccess: SQLite.SQLStatementCallback | undefined;
   onError?: SQLite.SQLStatementErrorCallback | undefined;
-  exercises: Exercises;
+  exercises?: Exercises;
 }
 
 export default class ExercisesRepository {
   DBNAME = "app.db";
 
   CREATE = 
-    "CREATE TABLE IF NOT EXISTS exercises(idExercicio INTEGER PRIMARY KEY AUTOINCREMENT, dsExercicio VARCHAR(50), repeticoes INTEGER, QtdRepeticoes INTEGER, FOREIGN KEY (idSerie) REFERENCES Series (idSerie))";
+    "CREATE TABLE IF NOT EXISTS exercises(idExercicio INTEGER PRIMARY KEY AUTOINCREMENT, dsExercicio VARCHAR(50), repeticoes INTEGER, QtdRepeticoes INTEGER, idSerie INTEGER, FOREIGN KEY (idSerie) REFERENCES Series (idSerie))";
 
   SELECT = "SELECT * FROM exercises";
 
@@ -42,7 +42,7 @@ export default class ExercisesRepository {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
         this.INSERT,
-        [exercises.dsExercicio, exercises.repeticoes, exercises.qtdRepeticoes,  exercises.idSerie],
+        [exercises?.dsExercicio, exercises?.repeticoes, exercises?.qtdRepeticoes,  exercises?.idSerie],
         onSuccess,
         onError
       );
@@ -53,7 +53,7 @@ export default class ExercisesRepository {
     var db = SQLite.openDatabase(this.DBNAME);
 
     db.transaction((transaction) => {
-      transaction.executeSql(this.DELETE, [exercises?.id], onSuccess, onError);
+      transaction.executeSql(this.DELETE, [exercises?.idExercicio], onSuccess, onError);
     });
   }
 }
