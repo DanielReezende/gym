@@ -1,23 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  View,
-  SafeAreaView,
-  StatusBar,
-  Image, 
-  Text,
-  FlatList
-} from 'react-native';
-import SeriesRepository from '../../repositories/Series';
-
+import { useRoute } from '@react-navigation/core';
 import * as SQLite from 'expo-sqlite';
+import React, { useEffect, useState } from 'react';
+import {
+  FlatList, Image, SafeAreaView,
+  StatusBar,
 
+  Text, View
+} from 'react-native';
 import logoImg from '../../assets/logoImg.png';
-import styles from './styles';
 import { CardSerie } from '../../components/CardSerie';
+import SeriesRepository from '../../repositories/Series';
+import styles from './styles';
 
 
-
-interface Serie {
+export interface Serie {
     dsSerie: string;
     idPerson: number;
     idSerie: number;
@@ -46,6 +42,9 @@ export function ListSeries(){
     retrieveData()
   }, [])
 
+  if( useRoute().params ) {
+    retrieveData();
+  }
 
 
   return (

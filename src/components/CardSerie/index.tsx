@@ -1,15 +1,16 @@
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
-
+import { Serie } from '../../pages/ListSeries';
 import SerieRepository from '../../repositories/Series';
-
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
+
+
 
 interface CardSerieprops extends RectButtonProps {
   data: {
@@ -22,6 +23,10 @@ interface CardSerieprops extends RectButtonProps {
 
 export const CardSerie = ({ data, ...rest}: CardSerieprops) => {  
   const navigation = useNavigation()
+  
+  function handleEdit (serie: Serie) {
+    navigation.navigate("EditSerie", serie);
+  }
 
   const repository = new SerieRepository();
 
@@ -57,6 +62,7 @@ export const CardSerie = ({ data, ...rest}: CardSerieprops) => {
       <RectButton 
         style={styles.container}
         {...rest}
+        onPress={() => handleEdit(data)}
       >
         <Text style={styles.title}>
           {data.dsSerie}

@@ -1,22 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  View,
-  SafeAreaView,
-  StatusBar,
-  Image, 
-  Text,
-  FlatList
-} from 'react-native';
-import PersonRepository from '../../repositories/Person';
-
+import { useRoute } from '@react-navigation/core';
 import * as SQLite from 'expo-sqlite';
+import React, { useEffect, useState } from 'react';
+import {
+  FlatList, Image, SafeAreaView,
+  StatusBar,
 
+  Text, View
+} from 'react-native';
 import logoImg from '../../assets/logoImg.png';
-import styles from './styles';
 import { CardStudent } from '../../components/CardStudent';
+import PersonRepository from '../../repositories/Person';
+import styles from './styles';
 
 
-interface Student {
+
+
+export interface Student {
   id: number;
   name: string;
 }
@@ -43,6 +42,10 @@ export function ListStudents(){
   useEffect(() => {
     retrieveData()
   }, [])
+
+  if( useRoute().params ) {
+    retrieveData()
+  }
 
 
   return (
