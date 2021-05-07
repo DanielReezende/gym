@@ -1,23 +1,20 @@
 import React from 'react';
-import { 
-  View,
-  Text,
+import {
   Image,
   SafeAreaView,
-  StatusBar
+  StatusBar, Text, View
 } from 'react-native';
-
-import logoImg from '../../assets/logoImg.png';
-
+import listaAlunos from '../../assets/listaalunos.png';
 import listaExercicios from '../../assets/listaexercicios.png';
 import listaSeries from '../../assets/listaseries.png';
-import listaAlunos from '../../assets/listaalunos.png';
-
-import styles from './styles';
+import logoImg from '../../assets/logoImg.png';
 import { ListButton } from '../../components/ListButton';
+import styles from './styles';
+
+
+
 
 export function Main(){
-
 
 
   return (

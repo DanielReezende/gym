@@ -1,15 +1,16 @@
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
-
+import { Student } from '../../pages/ListStudents';
 import PersonRepository from '../../repositories/Person';
-
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
+
+
 
 interface CardStudentProps extends RectButtonProps {
   data: {
@@ -21,6 +22,10 @@ interface CardStudentProps extends RectButtonProps {
 
 export const CardStudent = ({ data, ...rest}: CardStudentProps) => {  
   const navigation = useNavigation()
+  
+  function handleEdit (student: Student) {
+    navigation.navigate("EditStudent", student);
+  }
 
   const repository = new PersonRepository();
 
@@ -55,6 +60,7 @@ export const CardStudent = ({ data, ...rest}: CardStudentProps) => {
       <RectButton 
         style={styles.container}
         {...rest}
+        onPress={()=>handleEdit(data)}
       >
         <Text style={styles.title}>
           {data.name}
