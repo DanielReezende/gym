@@ -22,13 +22,12 @@ interface CardExerciseprops extends RectButtonProps {
 }
 
 
-export const CardExercise = ({ data, ...rest}: CardExerciseprops) => {  
+export const CardExercise = ({ data, ...rest }: CardExerciseprops) => {  
   const navigation = useNavigation()
 
   const repository = new ExercisesRepository();
 
   function handleRemove (idExercicio: number, desc: string, idSerie: number, qtdRepeticoes: number, repeticoes: number) {
-    console.log(idExercicio)
     repository.Delete({exercises: {
       idExercicio,
       dsExercicio: desc,

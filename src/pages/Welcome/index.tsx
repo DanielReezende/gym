@@ -19,7 +19,7 @@ export function Welcome() {
   const navigation = useNavigation();
 
   function handleNavigate() {
-    navigation.navigate('Main');
+    navigation.navigate('SignIn');
   }
 
   return (

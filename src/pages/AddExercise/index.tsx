@@ -41,18 +41,7 @@ export function AddExercise(){
     navigation.navigate('ListExercises');
   }
 
-
   function handleSubmit() {
-    const exercise = {
-      dsExercicio,
-      idSerie,
-      qtdRepeticoes,
-      repeticoes
-    }
-
-    console.log(exercise)
-
-
     repository.Save({
       exercises: {
         dsExercicio,

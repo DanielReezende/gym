@@ -19,7 +19,6 @@ const AppRoutes: React.FC = () => (
       backgroundColor: colors.white
     }
   }}>
-    <stackRoutes.Screen name="Welcome" component={Welcome}  />
     <stackRoutes.Screen name="Main" component={AuthRoutes}  />
     <stackRoutes.Screen name="ListSeries" component={ListSeries}  />
     <stackRoutes.Screen name="ListStudents" component={ListStudents}  />
