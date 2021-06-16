@@ -1,15 +1,16 @@
 import { Feather } from '@expo/vector-icons';
-import React from 'react';
-import { Text, StyleSheet, View } from 'react-native';
-import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/core';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
-
+import { Exercise } from '../../pages/ListExercises';
 import ExercisesRepository from '../../repositories/Exercises';
-
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
+
+
 
 interface CardExerciseprops extends RectButtonProps {
   data: {
@@ -24,6 +25,11 @@ interface CardExerciseprops extends RectButtonProps {
 
 export const CardExercise = ({ data, ...rest }: CardExerciseprops) => {  
   const navigation = useNavigation()
+  
+  function handleEdit (exercise: Exercise) {
+    console.log(exercise)
+    navigation.navigate("EditExercise", exercise);
+  }
 
   const repository = new ExercisesRepository();
 
@@ -61,6 +67,7 @@ export const CardExercise = ({ data, ...rest }: CardExerciseprops) => {
       <RectButton 
         style={styles.container}
         {...rest}
+        onPress={() => handleEdit(data)}
       >
         <Text style={styles.title}>
           {data.dsExercicio}

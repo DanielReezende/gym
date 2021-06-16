@@ -1,24 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  View,
-  SafeAreaView,
-  StatusBar,
-  Image, 
-  Text,
-  FlatList
-} from 'react-native';
-
-import ExercisesRepository from '../../repositories/Exercises';
-
+import { useRoute } from '@react-navigation/core';
 import * as SQLite from 'expo-sqlite';
+import React, { useEffect, useState } from 'react';
+import {
+  FlatList, Image, SafeAreaView,
+  StatusBar,
 
+  Text, View
+} from 'react-native';
 import logoImg from '../../assets/logoImg.png';
+import { CardExercise } from '../../components/CardExercise';
+import ExercisesRepository from '../../repositories/Exercises';
 import styles from './styles';
 
-import { CardExercise } from '../../components/CardExercise';
 
-
-interface Exercise {
+export interface Exercise {
   idExercicio: number;
   dsExercicio: string;
   idSerie: number;
@@ -48,6 +43,10 @@ export function ListExercises(){
   useEffect(() => {
     retrieveData()
   }, [])
+
+  if( useRoute().params ) {
+    retrieveData();
+  }
 
 
   return (

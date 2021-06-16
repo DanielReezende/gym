@@ -1,4 +1,4 @@
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from "expo-sqlite";
 
 interface Person {
   id?: number;
@@ -12,39 +12,48 @@ interface PersonRepositoryProps {
 }
 
 export default class PersonRepository {
-  DBNAME = 'app.db'
+  DBNAME = "app.db";
 
-  CREATE = 
-    'CREATE TABLE IF NOT EXISTS person(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100))';
+  CREATE =
+    "CREATE TABLE IF NOT EXISTS person(id INTEGER PRIMARY KEY AUTOINCREMENT, name VARCHAR(100))";
 
-  SELECT = 'SELECT * FROM person';
+  SELECT = "SELECT * FROM person";
 
-  INSERT = 'INSERT INTO person (name) values (?)';
+  INSERT = "INSERT INTO person (name) values (?)";
 
-  DELETE = 'DELETE FROM person WHERE id = ?';
+  EDIT = "UPDATE person SET name = ? WHERE id = ?";
 
-  Retrieve({ onSuccess, onError } : PersonRepositoryProps) {
+  DELETE = "DELETE FROM person WHERE id = ?";
 
+  Retrieve({ onSuccess, onError }: PersonRepositoryProps) {
     var db = SQLite.openDatabase(this.DBNAME);
-    
+
     db.transaction((transaction) => {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(this.SELECT, [], onSuccess, onError);
     });
-
   }
 
-  Save({ person, onSuccess, onError } : PersonRepositoryProps) {
+  Edit({ person, onSuccess, onError }: PersonRepositoryProps) {
     var db = SQLite.openDatabase(this.DBNAME);
 
     db.transaction((transaction) => {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(
-        this.INSERT,
-        [person?.name],
+        this.EDIT,
+        [person?.name, person?.id],
         onSuccess,
-        onError,
+        onError
       );
+    });
+  }
+
+  Save({ person, onSuccess, onError }: PersonRepositoryProps) {
+    var db = SQLite.openDatabase(this.DBNAME);
+
+    db.transaction((transaction) => {
+      transaction.executeSql(this.CREATE, []);
+      transaction.executeSql(this.INSERT, [person?.name], onSuccess, onError);
     });
   }
 

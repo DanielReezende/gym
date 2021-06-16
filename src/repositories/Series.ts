@@ -15,12 +15,14 @@ interface SeriesRepositoryProps {
 export default class SeriesRepository {
   DBNAME = "app.db";
 
-  CREATE = 
+  CREATE =
     "CREATE TABLE IF NOT EXISTS series (idSerie INTEGER PRIMARY KEY AUTOINCREMENT, dsSerie VARCHAR(50), idPerson INTEGER, FOREIGN KEY (idPerson) REFERENCES Person (id))";
 
   SELECT = "SELECT * FROM series";
 
   INSERT = "INSERT INTO series (dsSerie, idPerson) values (?, ?)";
+
+  EDIT = "UPDATE series SET dsSerie = ?, idPerson = ? WHERE idSerie = ?";
 
   DELETE = "DELETE FROM series WHERE idSerie = ?";
 
@@ -30,6 +32,20 @@ export default class SeriesRepository {
     db.transaction((transaction) => {
       transaction.executeSql(this.CREATE, []);
       transaction.executeSql(this.SELECT, [], onSuccess, onError);
+    });
+  }
+
+  Edit({ series, onSuccess, onError }: SeriesRepositoryProps) {
+    var db = SQLite.openDatabase(this.DBNAME);
+
+    db.transaction((transaction) => {
+      transaction.executeSql(this.CREATE, []);
+      transaction.executeSql(
+        this.EDIT,
+        [series?.desc, series?.idPerson, series?.id],
+        onSuccess,
+        onError
+      );
     });
   }
 
