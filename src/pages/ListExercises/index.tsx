@@ -1,53 +1,37 @@
-import { useRoute } from '@react-navigation/core';
-import * as SQLite from 'expo-sqlite';
+
 import React, { useEffect, useState } from 'react';
 import {
-  FlatList, Image, SafeAreaView,
+  FlatList, 
+  Image,
+  SafeAreaView,
   StatusBar,
-
-  Text, View
+  Text, 
+  View
 } from 'react-native';
 import logoImg from '../../assets/logoImg.png';
 import { CardExercise } from '../../components/CardExercise';
-import ExercisesRepository from '../../repositories/Exercises';
 import styles from './styles';
-
+import { useAuth } from "../../hooks/useAuth";
+import { api } from "../../services/api";
 
 export interface Exercise {
-  idExercicio: number;
+  idExercicio: string;
   dsExercicio: string;
-  idSerie: number;
+  idSerie: string;
   repeticoes: number;
   qtdRepeticoes: number;
 }
 
 
 export function ListExercises(){
+  const { token } = useAuth();
   const [exercises, setExercises] = useState<Exercise[]>([]);
-
-  function onSuccess(tx: SQLite.SQLTransaction, results: SQLite.SQLResultSet) {
-    const data: Exercise[] = [];
-
-      for (let i = 0; i < results.rows.length; i++) {
-        data.push(results.rows.item(i));
-      }
-    
-    setExercises(data)   
-  }
-
-  function retrieveData() {
-    const repository = new ExercisesRepository();
-    repository.Retrieve({ onSuccess })
-  }
-
+  
   useEffect(() => {
-    retrieveData()
-  }, [])
-
-  if( useRoute().params ) {
-    retrieveData();
-  }
-
+    api
+      .get("/exercise", { headers: token })
+      .then((response) => setExercises(response.data));
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -64,7 +48,7 @@ export function ListExercises(){
               renderItem={({ item }) => (
                 <CardExercise  data={item}/>
               )}
-              keyExtractor={(item) => String(item.idExercicio)}
+              keyExtractor={(item) => item.idExercicio}
               showsVerticalScrollIndicator={false}
             />
 

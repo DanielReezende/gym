@@ -6,33 +6,37 @@ interface AuthProviderProps {
 }
 
 interface SignInCredentials {
-  email: string;
+  username: string;
   password: string;
 }
 
+
 interface AuthContextData {
   signed: boolean,
-  user: object | null,
+  token: Token | null,
   signIn(credentials: SignInCredentials): Promise<void>;
 }
 
+interface Token {
+  Authorization: string;
+}
 
 const AuthContext = createContext({} as AuthContextData);
 
 
 export function AuthProvider({ children }: AuthProviderProps){
-  const [user, setUser] = useState<object | null>(null);
+  const [token, setToken] = useState<Token | null>(null);
 
-  const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('/login', { email, password});
+  const signIn = useCallback(async ({ username, password }) => {
+    const response = await api.post('/login', { username, senha: password });
 
-    setUser(response.data.user);
+    setToken(response.data);
   }, [])
 
   return (
     <AuthContext.Provider value={{ 
-      signed: !!user,
-      user,
+      signed: !!token,
+      token,
       signIn,
     }}>
       { children }

@@ -13,31 +13,42 @@ import {
 } from 'react-native';
 
 import { Button } from '../../components/Button';
+import { useAuth } from '../../hooks/useAuth';
 
 import colors from '../../styles/colors';
 import styles from './styles';
 
 export function SignIn(){
+  const { signIn } = useAuth()
+  
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
-  const [name, setName] = useState<string>('')
+  const [username, setUsername] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
 
-  function handleSubmit() {
+  async function handleSubmit() {
+    signIn({ username, password})
+
+    alert('Login realizado com sucesso')
   }
-
 
   function handleInputBlur () {
     setIsFocused(false)
-    setIsFilled(!!name)
+    setIsFilled(!!username || !!password)
   }
 
   function handleInputFocus() {
     setIsFocused(true)
   }
 
-  function handleInputChange(value: string) {
+  function handleUsernameChange(value: string) {
     setIsFilled(!!value)
-    setName(value)
+    setUsername(value)
+  }
+  
+  function handlePasswordhange(value: string) {
+    setIsFilled(!!value)
+    setPassword(value)
   }
 
   return (
@@ -58,7 +69,7 @@ export function SignIn(){
                     placeholder="Username"
                     onBlur={handleInputBlur}
                     onFocus={handleInputFocus}
-                    onChangeText={handleInputChange}
+                    onChangeText={handleUsernameChange}
                   />
 
                   <TextInput  
@@ -66,7 +77,7 @@ export function SignIn(){
                     placeholder="Password"
                     onBlur={handleInputBlur}
                     onFocus={handleInputFocus}
-                    onChangeText={handleInputChange}
+                    onChangeText={setPassword}
                   />
 
                   <View style={styles.footer}>

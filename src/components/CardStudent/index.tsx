@@ -5,8 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
-import { Student } from '../../pages/ListStudents';
-import PersonRepository from '../../repositories/Person';
+import { useAuth } from '../../hooks/useAuth';
+import { api } from '../../services/api';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
 
@@ -14,30 +14,27 @@ import fonts from '../../styles/fonts';
 
 interface CardStudentProps extends RectButtonProps {
   data: {
-    id: number;
+    id: string;
     name: string;
   };
 }
 
 
-export const CardStudent = ({ data, ...rest}: CardStudentProps) => {  
+export const CardStudent = ({ data, ...rest}: CardStudentProps) => { 
   const navigation = useNavigation()
-  
-  function handleEdit (student: Student) {
-    navigation.navigate("EditStudent", student);
-  }
+  const { token } = useAuth();
 
-  const repository = new PersonRepository();
+  async function handleRemove (id: string, name: string) {
+    await api.delete('/person', { headers: token,
+      data: {
+        id,
+        name
+      }
+    })
 
-  function handleRemove (id: number, name: string) {
-    repository.Delete({person: {
-      id,
-      name
-    }, onSuccess: () => {
-      alert(`Aluno ${data.id} removido com sucesso!`)
-      navigation.navigate('Main');
-      navigation.navigate('ListStudents');
-    }})
+    alert('Aluno excluído com sucesso!')
+    navigation.navigate('Main');
+    navigation.navigate('ListStudents');
   }
 
 
@@ -60,7 +57,6 @@ export const CardStudent = ({ data, ...rest}: CardStudentProps) => {
       <RectButton 
         style={styles.container}
         {...rest}
-        onPress={()=>handleEdit(data)}
       >
         <Text style={styles.title}>
           {data.name}

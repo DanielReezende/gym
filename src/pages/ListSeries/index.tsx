@@ -1,50 +1,32 @@
 import { useRoute } from '@react-navigation/core';
-import * as SQLite from 'expo-sqlite';
 import React, { useEffect, useState } from 'react';
 import {
-  FlatList, Image, SafeAreaView,
+  FlatList, 
+  Image, 
+  SafeAreaView,
   StatusBar,
-
-  Text, View
+  Text, 
+  View
 } from 'react-native';
 import logoImg from '../../assets/logoImg.png';
 import { CardSerie } from '../../components/CardSerie';
-import SeriesRepository from '../../repositories/Series';
+import { useAuth } from '../../hooks/useAuth';
+import { api } from '../../services/api';
 import styles from './styles';
 
-
 export interface Serie {
-    dsSerie: string;
-    idPerson: number;
-    idSerie: number;
+  desc: string;
+  idPerson: string;
+  id: string;
 }
 
-
 export function ListSeries(){
+  const { token } = useAuth();
   const [series, setSeries] = useState<Serie[]>([]);
 
-  function onSuccess(tx: SQLite.SQLTransaction, results: SQLite.SQLResultSet) {
-    const data: Serie[] = [];
-
-      for (let i = 0; i < results.rows.length; i++) {
-        data.push(results.rows.item(i));
-      }
-    
-    setSeries(data)   
-  }
-
-  function retrieveData() {
-    const repository = new SeriesRepository();
-    repository.Retrieve({ onSuccess })
-  }
-
   useEffect(() => {
-    retrieveData()
+    api.get('/series', { headers: token }).then(response => setSeries(response.data))
   }, [])
-
-  if( useRoute().params ) {
-    retrieveData();
-  }
 
 
   return (
@@ -62,7 +44,7 @@ export function ListSeries(){
               renderItem={({ item }) => (
                 <CardSerie data={item}/>
               )}
-              keyExtractor={(item) => String(item.idSerie)}
+              keyExtractor={(item) => item.id}
               showsVerticalScrollIndicator={false}
             />
 

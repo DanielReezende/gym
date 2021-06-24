@@ -14,45 +14,40 @@ import {
 
 import { useNavigation } from '@react-navigation/core';
 
-import ExercisesRepository from '../../repositories/Exercises';
 import logoImg from '../../assets/logoImg.png';
+import { api } from "../../services/api";
 
 import { Button } from '../../components/Button';
 
 import colors from '../../styles/colors';
 import styles from './styles';
+import { useAuth } from "../../hooks/useAuth";
 
 
 export function AddExercise(){
   const navigation = useNavigation()
+  const { token } = useAuth();
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
   const [dsExercicio, setDsExercicio] = useState<string>('')
-  const [idSerie, setIdSerie] = useState<number>(0)
+  const [idSerie, setIdSerie] = useState<string>('')
   const [repeticoes, setRepeticoes] = useState<number>(0)
   const [qtdRepeticoes, setQtdRepeticoes] = useState<number>(0)
 
+  async function handleSubmit() {
+    const { data } = await api.post("/exercise", { 
+      dsExercicio, 
+      idSerie, 
+      qtdRepeticoes, 
+      repeticoes
+    }, 
+    { headers: token, }
+    );
 
-  const repository = new ExercisesRepository();
+    alert("Exercício salvo com sucesso");
 
-  function success () {
-    alert('Exercicio registrado com sucesso');
-
-    navigation.navigate('ListExercises');
+    navigation.navigate("ListExercises");
   }
-
-  function handleSubmit() {
-    repository.Save({
-      exercises: {
-        dsExercicio,
-        idSerie,
-        qtdRepeticoes,
-        repeticoes
-      },
-      onSuccess: success
-    })
-  }
-
 
   function handleInputBlur () {
     setIsFocused(false)
@@ -70,7 +65,7 @@ export function AddExercise(){
 
   function handleInputIdSerieChange(value: string) {
     setIsFilled(!!value)
-    setIdSerie(Number(value))
+    setIdSerie(value)
   }
 
   function handleInputRepeatChange(value: string) {

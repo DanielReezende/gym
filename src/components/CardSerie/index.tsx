@@ -5,8 +5,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
-import { Serie } from '../../pages/ListSeries';
-import SerieRepository from '../../repositories/Series';
+import { useAuth } from '../../hooks/useAuth';
+import { api } from '../../services/api';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
 
@@ -14,32 +14,29 @@ import fonts from '../../styles/fonts';
 
 interface CardSerieprops extends RectButtonProps {
   data: {
-    idSerie: number;
-    dsSerie: string;
-    idPerson: number;
+    id: string;
+    desc: string;
+    idPerson: string;
   };
 }
 
 
-export const CardSerie = ({ data, ...rest}: CardSerieprops) => {  
+export const CardSerie = ({ data, ...rest}: CardSerieprops) => {
+  const { token } = useAuth();
   const navigation = useNavigation()
   
-  function handleEdit (serie: Serie) {
-    navigation.navigate("EditSerie", serie);
-  }
+  async function handleRemove (id: string, desc: string, idPerson: string) {
+      await api.delete('/person', { headers: token,
+      data: {
+        id,
+        desc,
+        idPerson
+      }
+    })
 
-  const repository = new SerieRepository();
-
-  function handleRemove (id: number, desc: string, idPerson: number) {
-    repository.Delete({series: {
-      id,
-      desc,
-      idPerson
-    }, onSuccess: () => {
-      alert(`Serie ${data.idSerie} removida com sucesso!`)
-      navigation.navigate('Main');
-      navigation.navigate('ListSeries');
-    }})
+    alert('Série excluída com sucesso!')
+    navigation.navigate('Main');
+    navigation.navigate('ListSeries');
   }
 
 
@@ -51,7 +48,7 @@ export const CardSerie = ({ data, ...rest}: CardSerieprops) => {
           <View>
             <RectButton 
               style={styles.buttonRemove}
-              onPress={() => handleRemove(data.idSerie, data.dsSerie, data.idPerson)}
+              onPress={() => handleRemove(data.id, data.desc, data.idPerson)}
             >
               <Feather name="trash" size={28} color={colors.white} /> 
             </RectButton>
@@ -62,17 +59,16 @@ export const CardSerie = ({ data, ...rest}: CardSerieprops) => {
       <RectButton 
         style={styles.container}
         {...rest}
-        onPress={() => handleEdit(data)}
       >
         <Text style={styles.title}>
-          {data.dsSerie}
+          {data.desc}
         </Text>
         <View style={styles.details}>
           <Text style={styles.detailsTitle}>
-            ID do usuário:
+            ID da Série:
           </Text>
           <Text style={styles.detailsSubtitle}>
-            {data.idPerson}
+            {data.id}
           </Text>
         </View> 
       </RectButton>

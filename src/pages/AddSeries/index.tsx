@@ -14,45 +14,36 @@ import {
 
 import { useNavigation } from '@react-navigation/core';
 
-import SeriesRepository from '../../repositories/Series';
 import logoImg from '../../assets/logoImg.png';
 
 import { Button } from '../../components/Button';
 
 import colors from '../../styles/colors';
 import styles from './styles';
+import { api } from '../../services/api';
+import { useAuth } from '../../hooks/useAuth';
 
 
 export function AddSeries(){
   const navigation = useNavigation()
+  const { token } = useAuth();
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
-  const [name, setName] = useState<string>('')
-  const [idStudent, setIdStudent] = useState<number>(0)
+  const [desc, setDesc] = useState<string>('')
+  const [idPerson, setIdPerson] = useState<string>('')
 
-  const repository = new SeriesRepository();
+  async function handleSubmit() {
+    await api.post('/series', { desc, idPerson}, { headers: token })
 
-  function success () {
-    alert('Série registrada com sucesso');
+    alert('Série cadastrada com sucesso!')
 
-    navigation.navigate('ListSeries');
-  }
-
-
-  function handleSubmit() {
-    repository.Save({
-      series: {
-        desc: name,
-        idPerson: idStudent
-      },
-      onSuccess: success
-    })
+    navigation.navigate('ListSeries')
   }
 
 
   function handleInputBlur () {
     setIsFocused(false)
-    setIsFilled(!!name || !!idStudent)
+    setIsFilled(!!desc || !!idPerson)
   }
 
   function handleInputFocus() {
@@ -61,12 +52,12 @@ export function AddSeries(){
 
   function handleInputChange(value: string) {
     setIsFilled(!!value)
-    setName(value)
+    setDesc(value)
   }
 
   function handleInputIdChange(value: string) {
     setIsFilled(!!value)
-    setIdStudent(Number(value))
+    setIdPerson(value)
   }
 
   return (
@@ -88,7 +79,7 @@ export function AddSeries(){
 
                   <TextInput  
                     style={[styles.input, (isFocused || isFilled) && { borderColor: colors.red }]}
-                    placeholder="Digite um nome"
+                    placeholder="Digite uma descrição para a Série"
                     onBlur={handleInputBlur}
                     onFocus={handleInputFocus}
                     onChangeText={handleInputChange}
@@ -96,7 +87,7 @@ export function AddSeries(){
 
                   <TextInput  
                     style={[styles.input, (isFocused || isFilled) && { borderColor: colors.red }]}
-                    placeholder="Digite um ID"
+                    placeholder="Digite o id do aluno"
                     onBlur={handleInputBlur}
                     onFocus={handleInputFocus}
                     onChangeText={handleInputIdChange}

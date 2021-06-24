@@ -1,5 +1,3 @@
-import { useRoute } from '@react-navigation/core';
-import * as SQLite from 'expo-sqlite';
 import React, { useEffect, useState } from 'react';
 import {
   FlatList, Image, SafeAreaView,
@@ -9,44 +7,26 @@ import {
 } from 'react-native';
 import logoImg from '../../assets/logoImg.png';
 import { CardStudent } from '../../components/CardStudent';
-import PersonRepository from '../../repositories/Person';
+import { useAuth } from '../../hooks/useAuth';
+import { api } from '../../services/api';
 import styles from './styles';
 
 
 
 
 export interface Student {
-  id: number;
+  id: string;
   name: string;
 }
 
 
 export function ListStudents(){
+  const { token } = useAuth();
   const [students, setStudents] = useState<Student[]>([]);
 
-  function onSuccess(tx: SQLite.SQLTransaction, results: SQLite.SQLResultSet) {
-    const data: Student[] = [];
-
-      for (let i = 0; i < results.rows.length; i++) {
-        data.push(results.rows.item(i));
-      }
-    
-    setStudents(data)   
-  }
-
-  function retrieveData() {
-    const repository = new PersonRepository();
-    repository.Retrieve({ onSuccess })
-  }
-
   useEffect(() => {
-    retrieveData()
+    api.get('/person', { headers: token}).then(response => setStudents(response.data))
   }, [])
-
-  if( useRoute().params ) {
-    retrieveData()
-  }
-
 
   return (
     <SafeAreaView style={styles.container}>

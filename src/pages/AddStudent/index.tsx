@@ -14,37 +14,31 @@ import {
 
 import { useNavigation } from '@react-navigation/core';
 
-import PersonRepository from '../../repositories/Person';
 import logoImg from '../../assets/logoImg.png';
+import { api } from '../../services/api';
 
 
 import { Button } from '../../components/Button';
 
 import colors from '../../styles/colors';
 import styles from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 export function AddStudent(){
   const navigation = useNavigation()
+  const { token } = useAuth();
   const [isFocused, setIsFocused] = useState(false)
   const [isFilled, setIsFilled] = useState(false)
   const [name, setName] = useState<string>('')
 
-  const repository = new PersonRepository();
-
-  function success () {
+  async function handleSubmit() {
+    const { data } = await api.post('/person', { name }, {
+      headers: token
+    })
+    
     alert('Aluno salvo com sucesso');
 
     navigation.navigate('ListStudents');
-  }
-
-
-  function handleSubmit() {
-    repository.Save({
-      person: {
-        name
-      },
-      onSuccess: success,
-    })
   }
 
 

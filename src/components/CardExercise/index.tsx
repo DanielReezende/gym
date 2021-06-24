@@ -5,8 +5,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Animated from 'react-native-reanimated';
+import { useAuth } from '../../hooks/useAuth';
 import { Exercise } from '../../pages/ListExercises';
-import ExercisesRepository from '../../repositories/Exercises';
+import { api } from '../../services/api';
 import colors from '../../styles/colors';
 import fonts from '../../styles/fonts';
 
@@ -14,37 +15,34 @@ import fonts from '../../styles/fonts';
 
 interface CardExerciseprops extends RectButtonProps {
   data: {
-    idExercicio: number;
+    idExercicio: string;
     dsExercicio: string;
-    idSerie: number;
+    idSerie: string;
     repeticoes: number;
     qtdRepeticoes: number;
   };
 }
 
 
-export const CardExercise = ({ data, ...rest }: CardExerciseprops) => {  
+export const CardExercise = ({ data, ...rest }: CardExerciseprops) => { 
+  const { token } = useAuth(); 
   const navigation = useNavigation()
   
-  function handleEdit (exercise: Exercise) {
-    console.log(exercise)
-    navigation.navigate("EditExercise", exercise);
-  }
 
-  const repository = new ExercisesRepository();
+  async function handleRemove (idExercicio: string, desc: string, idSerie: string, qtdRepeticoes: number, repeticoes: number) {
+    await api.delete('/person', { headers: token,
+      data: {
+        idExercicio,
+        dsExercicio: desc,
+        idSerie,
+        qtdRepeticoes,
+        repeticoes
+      }
+    })
 
-  function handleRemove (idExercicio: number, desc: string, idSerie: number, qtdRepeticoes: number, repeticoes: number) {
-    repository.Delete({exercises: {
-      idExercicio,
-      dsExercicio: desc,
-      idSerie,
-      qtdRepeticoes,
-      repeticoes
-    }, onSuccess: () => {
-      alert(`Exercicio ${data.idExercicio} removido com sucesso!`)
-      navigation.navigate('Main');
-      navigation.navigate('ListExercises');
-    }})
+    alert('Exercicio excluído com sucesso!')
+    navigation.navigate('Main');
+    navigation.navigate('ListExercises');
   }
 
 
@@ -67,17 +65,16 @@ export const CardExercise = ({ data, ...rest }: CardExerciseprops) => {
       <RectButton 
         style={styles.container}
         {...rest}
-        onPress={() => handleEdit(data)}
       >
         <Text style={styles.title}>
           {data.dsExercicio}
         </Text>
         <View style={styles.details}>
           <Text style={styles.detailsTitle}>
-            ID da Série:
+            ID do exercicio:
           </Text>
           <Text style={styles.detailsSubtitle}>
-            {data.idSerie}
+            {data.idExercicio}
           </Text>
         </View> 
       </RectButton>
